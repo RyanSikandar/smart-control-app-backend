@@ -28,8 +28,25 @@ const addAllotment = asyncHandler(async (req, res) => {
     res.status(201).json({ message: 'Allotment created successfully', data: allotment });
 });
 
+//get allotment info by id
+const getAllotment = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    const allotment = await Allotment.findById(id);
+    if (allotment) {
+        res.status(201).json({
+            data: allotment
+        })
+    }
+    else {
+        res.status(400);
+        throw new Error("Allotment not found");
+    }
+
+});
+
 //get allotment info and also the facility info for that fcode in the allotment
-const getAllotmentInfo = asyncHandler(async (req, res) => {
+const getAllAllotmentInfo = asyncHandler(async (req, res) => {
     // Find all allotments
     const allotments = await Allotment.find();
 
@@ -60,5 +77,6 @@ const getAllotmentInfo = asyncHandler(async (req, res) => {
 
 module.exports = {
     addAllotment,
-    getAllotmentInfo
+    getAllAllotmentInfo,
+    getAllotment
 };

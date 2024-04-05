@@ -5,11 +5,6 @@ const facility_model = require("../models/facility_model");
 // -------------------------------------------------------------------------------------
 
 // -------------------------------------------------------------------------------------
-// This is used to ensure user logs out automatically after 1 day of logging in
-
-// -------------------------------------------------------------------------------------
-
-// -------------------------------------------------------------------------------------
 const addFacility = asyncHandler(async (req, resp) => {
     const { Fcode, City, Type, Year, Date, URL, Allottee, Status, Address } = req.body;
     // Validation if user enters an empty string
@@ -87,6 +82,7 @@ const facilityData = asyncHandler(async (req, resp) => {
 
 });
 
+
 const facilityDataById = asyncHandler(async (req, resp) => {
     const facility = await facility_model.findById(req.params.id);
     if (facility) {
@@ -103,6 +99,6 @@ const facilityDataById = asyncHandler(async (req, resp) => {
 module.exports = {
     addFacility,
     facilityData,
-    facilityDataById
+    facilityDataById,
 };
 // -------------------------------------------------------------------------------------

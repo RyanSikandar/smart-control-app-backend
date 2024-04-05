@@ -15,7 +15,8 @@ const complainSchema = new mongoose.Schema({
     },
     ComplaintNo: {
         type: String,
-        required: [true, "Please add a Complaint Number"]
+        required: [true, "Please add a Complaint Number"],
+        unique: true
     },
     Nature: {
         type: String,
@@ -58,6 +59,6 @@ const complainSchema = new mongoose.Schema({
 }
 );
 
-const Complains = mongoose.model('Complain', allotmentSchema);
+const Complains = mongoose.model('Complain', complainSchema);
 
 module.exports = Complains;
