@@ -1,6 +1,6 @@
 const express = require("express");
 const user_model = require("../models/user_model");
-const {RegisterUser, UpdateUser, resetPassword, ChangePassw, LogInUser, LogOut, FetchData, LoginStatus, uploadFile} = require("../controllers/user_controller");
+const {RegisterUser, LogInUser, LogOut, FetchData, LoginStatus, uploadFile} = require("../controllers/user_controller");
 const protect = require("../middleware/AuthMiddleware");
 const ffmpeg = require('fluent-ffmpeg');
 const multer = require('multer');
@@ -16,10 +16,8 @@ router.post("/Register", RegisterUser);
 router.post("/Login", LogInUser);
 router.get("/Logout", LogOut);
 router.get("/FetchData", protect, FetchData);
-router.get("/LoggedIn", LoginStatus);
-router.patch("/UpdateUser", protect, UpdateUser);
-router.patch("/ChangePass", protect, ChangePassw); 
-router.put("/ResetPassword/:resetToken", resetPassword);
-router.post('/FileUpload', uploadFile, uploader.single('file'))
+
+
+//router.post('/FileUpload', uploadFile, uploader.single('file'))
 
 module.exports = router;
