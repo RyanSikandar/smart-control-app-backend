@@ -1,6 +1,6 @@
 const express = require("express");
 const user_model = require("../models/user_model");
-const {RegisterUser, LogInUser, LogOut, FetchData, LoginStatus, uploadFile} = require("../controllers/user_controller");
+const { RegisterUser, LogInUser, LogOut, FetchData, LoginStatus, uploadFile } = require("../controllers/user_controller");
 const protect = require("../middleware/AuthMiddleware");
 const ffmpeg = require('fluent-ffmpeg');
 const multer = require('multer');
