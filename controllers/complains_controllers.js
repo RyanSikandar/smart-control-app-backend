@@ -95,7 +95,7 @@ const assignComplain = asyncHandler(async (req, res) => {
 
 // Get all complains
 const getComplains = asyncHandler(async (req, res) => {
-    const complains = await Complain.find({});
+    const complains = await Complain.find();
 
     res.status(200).json({ data: complains });
 });

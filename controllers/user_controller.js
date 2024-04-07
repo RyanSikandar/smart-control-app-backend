@@ -120,6 +120,7 @@ const LogInUser = asyncHandler(async (req, resp) => {
                 _id: user.id,
                 name: user.Fname,
                 email: user.Email,
+                type: user.Type,
                 token
             }
 
