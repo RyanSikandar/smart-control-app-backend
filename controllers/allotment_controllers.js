@@ -59,6 +59,7 @@ const getAllAllotmentInfo = asyncHandler(async (req, res) => {
 
         if (facility) {
             formattedAllotments.push({
+                _id: allotment._id,
                 allotmentCode: allotment.Acode,
                 facilityCode: allotment.Fcode,
                 dateOfOccupation: allotment.dateOfOccupation,

@@ -18,7 +18,7 @@ const generateToken = (id) => {
 const RegisterUser = asyncHandler(async (req, resp) => {
     const { fname, lname, email, password, contact, cnic, gender, type, ArmyNo, UnitNo, Address } = req.body;
     console.log(req.body);
-    
+
     // Validation if user enters an empty string
     if (!fname || !lname || !email || !password || !contact || !cnic || !gender || !type || !ArmyNo || !UnitNo || !Address) {
         resp.status(400);
