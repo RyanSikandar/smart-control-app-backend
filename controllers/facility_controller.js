@@ -36,7 +36,7 @@ const addFacility = asyncHandler(async (req, resp) => {
 
     // Check if the facility was successfully created
     if (newFacility) {
-        resp.status(201).json({
+        resp.status(200).json({
             message: "Facility Created",
             data: {
                 _id: newFacility._id,

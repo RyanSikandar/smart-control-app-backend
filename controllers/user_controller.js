@@ -17,7 +17,8 @@ const generateToken = (id) => {
 // -------------------------------------------------------------------------------------
 const RegisterUser = asyncHandler(async (req, resp) => {
     const { fname, lname, email, password, contact, cnic, gender, type, ArmyNo, UnitNo, Address } = req.body;
-
+    console.log(req.body);
+    
     // Validation if user enters an empty string
     if (!fname || !lname || !email || !password || !contact || !cnic || !gender || !type || !ArmyNo || !UnitNo || !Address) {
         resp.status(400);
@@ -35,7 +36,7 @@ const RegisterUser = asyncHandler(async (req, resp) => {
     if (userExists) {
         resp.status(400);
         throw new Error("Email is already in use.");
-    };
+    }
 
     // Create new user if they do not exist in Database
     const user = await user_model.create({
@@ -50,10 +51,9 @@ const RegisterUser = asyncHandler(async (req, resp) => {
         ArmyNo: ArmyNo,
         UnitNo: UnitNo,
         Address: Address,
-
     });
 
-    // Get the details of the user when account is created
+    // Get the details of the user when the account is created
     if (user) {
         resp.status(201).json({
             _id: user._id,
@@ -73,6 +73,7 @@ const RegisterUser = asyncHandler(async (req, resp) => {
         throw new Error("Invalid User Data");
     }
 });
+
 
 // -------------------------------------------------------------------------------------
 
@@ -114,10 +115,14 @@ const LogInUser = asyncHandler(async (req, resp) => {
 
     if (user && passwordisCorrect) {
         resp.status(200).json({
-            _id: user.id,
-            name: user.Fname,
-            email: user.Email,
-            token
+            message: "Login Successful",
+            data: {
+                _id: user.id,
+                name: user.Fname,
+                email: user.Email,
+                token
+            }
+
         });
     }
     else {
@@ -162,6 +167,15 @@ const FetchData = asyncHandler(async (req, resp) => {
     }
 
 });
+
+const getUsers = asyncHandler(async (req, res) => {
+    const users = await user_model.find();
+    //send data except password
+    users.forEach(user => {
+        user.Password = undefined;
+    });
+    res.status(200).json({ data: users });
+})
 // -------------------------------------------------------------------------------------
 
 // -------------------------------------------------------------------------------------
@@ -201,6 +215,7 @@ module.exports = {
     LogOut,
     FetchData,
     LoginStatus,
-    uploadFile
+    uploadFile,
+    getUsers
 };
 // -------------------------------------------------------------------------------------

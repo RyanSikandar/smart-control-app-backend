@@ -3,34 +3,28 @@ const bcryptjs = require("bcryptjs");
 
 const user_schema = mongoose.Schema(
     {
-        Fname:
-        {
+        Fname: {
             type: String,
-            required: [true, "Please add a name"]
+            required: [true, "Please add a first name"]
         },
-        Lname:
-        {
+        Lname: {
             type: String,
-            required: [true, "Please add a name"]
-        }
-        , Email:
-        {
+            default: " "
+        },
+        Email: {
             type: String,
             required: [true, "Please add an email"],
-            unique: true,
+            unique: true, // Ensure email is unique
             trim: true,
-            match:
-                [
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "Please enter a valid email"
-                ]
+            match: [
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                "Please enter a valid email"
+            ]
         },
-
-        Password:
-        {
+        Password: {
             type: String,
             required: [true, "Please add a password"],
-            minLength: [8, "Password must be at least 8 charachters"],
-            //maxLength: [20, "Password must have at most 20 charachters"],
+            minlength: [8, "Password must be at least 8 characters"], // Changed to minlength
         },
         Contact: {
             type: Number,
@@ -47,21 +41,20 @@ const user_schema = mongoose.Schema(
         },
         Type: {
             type: String,
-            required: [true, "Please enter a type"]
+            default: " "
         },
         ArmyNo: {
             type: String,
-            required: [true, "Please enter a Army Number"]
+            default: " "
         },
         UnitNo: {
             type: String,
-            required: [true, "Please enter a Unit Number"]
+            default: " "
         },
         Address: {
             type: String,
-            required: [true, "Please enter a address"]
+            required: [true, "Please enter an address"]
         },
-
     },
     {
         timestamps: true
@@ -70,15 +63,19 @@ const user_schema = mongoose.Schema(
 
 // Encrypt password before saving to DB
 user_schema.pre("save", async function (next) {
-    // This ensures that the password is only hashed when it is modified
+    // Only hash the password if it has been modified (or is new)
     if (!this.isModified("Password")) {
         return next();
-    };
+    }
 
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(this.Password, salt);
-    this.Password = hashedPassword;
-    next();
+    try {
+        const salt = await bcryptjs.genSalt(10);
+        const hashedPassword = bcryptjs.hash(this.Password, salt);
+        this.Password = hashedPassword;
+        next();
+    } catch (error) {
+        return next(error);
+    }
 });
 
 const user_model = mongoose.model("User", user_schema);

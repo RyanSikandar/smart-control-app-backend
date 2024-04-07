@@ -1,6 +1,6 @@
 const express = require("express");
 const user_model = require("../models/user_model");
-const { RegisterUser, LogInUser, LogOut, FetchData, LoginStatus, uploadFile } = require("../controllers/user_controller");
+const { RegisterUser, LogInUser, LogOut, FetchData, LoginStatus, uploadFile ,getUsers} = require("../controllers/user_controller");
 const protect = require("../middleware/AuthMiddleware");
 const ffmpeg = require('fluent-ffmpeg');
 const multer = require('multer');
@@ -15,6 +15,7 @@ const router = express.Router();
 router.post("/Register", RegisterUser);
 router.post("/Login", LogInUser);
 router.get("/Logout", LogOut);
+router.get("/allUsers",getUsers);
 router.get("/FetchData", protect, FetchData);
 
 
