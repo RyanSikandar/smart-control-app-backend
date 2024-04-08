@@ -60,6 +60,18 @@ const completeComplain = asyncHandler(async (req, res) => {
     }
 });
 
+const complainbyID = asyncHandler(async (req, resp) => {
+    const complain = await Complain.findById(req.params.id);
+    if (complain) {
+        resp.status(201).json({
+            data: complain
+        })
+    }
+    else {
+        resp.status(400);
+        throw new Error("Complain not found");
+    }
+})
 
 //Assigns a complain to a Technician
 const assignComplain = asyncHandler(async (req, res) => {
@@ -105,5 +117,6 @@ module.exports = {
     addComplaint,
     assignComplain,
     completeComplain,
-    getComplains
+    getComplains,
+    complainbyID
 };

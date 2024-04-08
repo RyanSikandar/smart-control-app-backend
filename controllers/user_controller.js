@@ -118,7 +118,7 @@ const LogInUser = asyncHandler(async (req, resp) => {
             message: "Login Successful",
             data: {
                 _id: user.id,
-                name: user.Fname,
+                name: user.Fname + " " + user.Lname,
                 email: user.Email,
                 type: user.Type,
                 token
