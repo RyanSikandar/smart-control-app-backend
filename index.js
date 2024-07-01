@@ -14,7 +14,7 @@ const allotment_route = require("./routes/allotmentRoutes");
 const complain_route = require("./routes/complainsRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
-
+app.use('/.well-known', express.static(path.join(__dirname, '.well-known')));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
